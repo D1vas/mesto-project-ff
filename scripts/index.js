@@ -11,6 +11,7 @@
 
         title.textContent = dataCard.name;
         image.setAttribute('src', dataCard.link);
+        image.setAttribute('alt', `Фото: ${dataCard.name}`);
         
         deleteButton.addEventListener('click', function () {
             deleteCard(card);
@@ -25,4 +26,4 @@
 // @todo: Вывести карточки на страницу
     initialCards.forEach(function(card) {
         cardList.append(createCard(card, deleteCard))
-    })
+    });
