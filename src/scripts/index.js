@@ -1,9 +1,12 @@
 import "../pages/index.css";
 import { initialCards } from "./cards.js";
 import { createCard, deleteCard } from "./card.js";
-import { openPopup, closePopup } from "./modal.js";
+import {
+  openPopup,
+  closePopup,
+  setCloseModalOnOverlayListeners,
+} from "./modal.js";
 
-const popup = document.querySelector(".popup");
 const imgPopup = document.querySelector(".popup_type_image");
 const popupImage = document.querySelector(".popup__image");
 const popupCaption = document.querySelector(".popup__caption");
@@ -17,9 +20,7 @@ const profileDescription = document.querySelector(".profile__description");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 const cardContainer = document.querySelector(".places__list");
 
-const closeBtnNewCard = newCardPopup.querySelector(".popup__close");
-const closeBtnProfile = profilePopup.querySelector(".popup__close");
-const closeBtnImage = imgPopup.querySelector(".popup__close");
+const closeBtns = document.querySelectorAll(".popup__close");
 
 const formProfile = document.forms["edit-profile"];
 const profileNameInput = formProfile.elements.name;
@@ -29,32 +30,12 @@ const formCard = document.forms["new-place"];
 const cardNameInput = formCard.elements["place-name"];
 const cardLinkInput = formCard.elements.link;
 
-// кнопки закрытия
-
-closeBtnProfile.addEventListener("click", () => closePopup(profilePopup));
-closeBtnNewCard.addEventListener("click", () => closePopup(newCardPopup));
-closeBtnImage.addEventListener("click", () => closePopup(imgPopup));
-
-// функции открытия и заполнения полей
-
-profileEditBtn.addEventListener("click", () => {
-  setFields();
-  openPopup(popup);
-});
-
-profileAddBtn.addEventListener("click", () => {
-  openPopup(newCardPopup);
-  addEventListener("submit", function (event) {
-    event.preventDefault();
-  });
-});
-
-function setFields() {
+function initProfileFormValues() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
 };
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
   const name = profileNameInput.value;
@@ -63,41 +44,63 @@ function handleFormSubmit(evt) {
   profileName.textContent = name;
   profileDescription.textContent = description;
 
-  closePopup(popup);
+  closePopup(profilePopup);
 };
 
 function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
 
-  const obj = {};
-  obj.name = cardNameInput.value;
-  obj.link = cardLinkInput.value;
+  const cardData = {};
+  cardData.name = cardNameInput.value;
+  cardData.link = cardLinkInput.value;
 
-  const card = createCard(obj, deleteCard, openCard);
+  const card = createCard(cardData, deleteCard, openCard);
   cardContainer.prepend(card);
 
   closePopup(newCardPopup);
+  formCard.reset();
 };
 
-function openCard(link, text) {
+// функция открытия карточки
+export function openCard(link, text) {
   popupImage.src = link;
   popupImage.alt = text;
   popupCaption.textContent = text;
 
   openPopup(imgPopup);
+  setCloseModalOnOverlayListeners(imgPopup);
 };
-
-formProfile.addEventListener("submit", handleFormSubmit);
-formCard.addEventListener("submit", handleNewCardFormSubmit);
-
-// анимация плавности
-const popups = document.querySelectorAll(".popup");
-popups.forEach(function (item) {
-  item.classList.add("popup_is-animated");
-});
 
 // вывод карточек
 initialCards.forEach(function (item) {
-  const card = createCard(item, deleteCard);
+  const card = createCard(item, deleteCard, openCard);
   cardContainer.append(card);
 });
+
+// функции открытия и заполнения полей
+
+profileEditBtn.addEventListener("click", () => {
+  initProfileFormValues();
+  openPopup(profilePopup);
+  setCloseModalOnOverlayListeners(profilePopup);
+});
+
+profileAddBtn.addEventListener("click", () => {
+  initProfileFormValues();
+  openPopup(newCardPopup);
+  setCloseModalOnOverlayListeners(newCardPopup);
+});
+
+// кнопка закрытия
+
+closeBtns.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    const popup = btn.closest(".popup");
+    closePopup(popup);
+  });
+});
+
+// обработчики
+
+formProfile.addEventListener("submit", handleProfileFormSubmit);
+formCard.addEventListener("submit", handleNewCardFormSubmit);

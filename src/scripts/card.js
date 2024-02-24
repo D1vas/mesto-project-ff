@@ -1,44 +1,32 @@
-import { openPopup } from "./modal.js";
-export function createCard(dataCard, deleteCard, handleLikeClick, openCard) {
-  const popupImage = document.querySelector(".popup__image");
-  const popupCaption = document.querySelector(".popup__caption");
-  const imgPopup = document.querySelector(".popup_type_image");
+import { openCard } from "./index";
+export function createCard(dataCard, deleteCard) {
+  // const popupImage = document.querySelector(".popup__image");
+  // const popupCaption = document.querySelector(".popup__caption");
+  // const imgPopup = document.querySelector(".popup_type_image");
 
-  const card = cardTemplate.cloneNode(true);
+  const cardTemplate = document.querySelector('#card-template').content;
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardTitle = card.querySelector(".card__title");
   const cardImg = card.querySelector(".card__image");
   const deleteButton = card.querySelector(".card__delete-button");
+  const likeButton = card.querySelector('.card__like-button');
 
-  function openCard(link, text) {
-    popupImage.src = link;
-    popupImage.alt = text;
-    popupCaption.textContent = text;
-
-    openPopup(imgPopup);
-  }
 
   cardImg.src = card.link;
   cardImg.alt = card.name;
   cardTitle.textContent = card.name;
 
   // открытие карточки
-  cardImg.addEventListener("click", () =>
-    openCard(cardImg.src, cardTitle.textContent)
-  );
+  cardImg.addEventListener("click", () => openCard(cardImg.src, cardTitle.textContent));
+ 
+  // лайк карточки
+likeButton.addEventListener('click', () => handleLikeClick(likeButton));
 
-  //лайк карточки
-  card
-    .querySelector(".card__like-button")
-    .addEventListener("click", handleLikeClick);
-  function handleLikeClick(evt) {
-    evt.target
-      .closest(".card__like-button")
-      .classList.toggle("card__like-button_is-active");
-  }
+ 
 
   cardTitle.textContent = dataCard.name;
-  cardImg.setAttribute("src", dataCard.link);
-  cardImg.setAttribute("alt", `Фото: ${dataCard.name}`);
+  cardImg.src = dataCard.link;
+  cardImg.alt = `Фото: ${dataCard.name}`;
 
   deleteButton.addEventListener("click", function () {
     deleteCard(card);
@@ -47,12 +35,13 @@ export function createCard(dataCard, deleteCard, handleLikeClick, openCard) {
   return card;
 };
 
-// удаление карточки
+  // удаление карточки
 export function deleteCard(card) {
   card.remove();
 };
 
-// темплейт карточки
-const cardTemplate = document
-  .getElementById("card-template")
-  .content.querySelector(".card");
+  //лайк карточки
+function handleLikeClick(likeElement) {
+  likeElement.classList.toggle('card__like-button_is-active');
+}
+
