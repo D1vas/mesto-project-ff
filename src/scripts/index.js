@@ -1,12 +1,13 @@
 import "../pages/index.css";
 import { initialCards } from "./cards.js";
-import { createCard, deleteCard } from "./card.js";
+import { createCard, deleteCard, handleLikeClick } from "./card.js";
 import {
   openPopup,
   closePopup,
   setCloseModalOnOverlayListeners,
 } from "./modal.js";
 
+const popups = document.querySelectorAll(".popup");
 const imgPopup = document.querySelector(".popup_type_image");
 const popupImage = document.querySelector(".popup__image");
 const popupCaption = document.querySelector(".popup__caption");
@@ -33,7 +34,7 @@ const cardLinkInput = formCard.elements.link;
 function initProfileFormValues() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-};
+}
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -45,7 +46,7 @@ function handleProfileFormSubmit(evt) {
   profileDescription.textContent = description;
 
   closePopup(profilePopup);
-};
+}
 
 function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
@@ -54,26 +55,25 @@ function handleNewCardFormSubmit(evt) {
   cardData.name = cardNameInput.value;
   cardData.link = cardLinkInput.value;
 
-  const card = createCard(cardData, deleteCard, openCard);
+  const card = createCard(cardData, deleteCard, openCard, handleLikeClick);
   cardContainer.prepend(card);
 
   closePopup(newCardPopup);
   formCard.reset();
-};
+}
 
 // функция открытия карточки
-export function openCard(link, text) {
+function openCard(link, text) {
   popupImage.src = link;
   popupImage.alt = text;
   popupCaption.textContent = text;
 
   openPopup(imgPopup);
-  setCloseModalOnOverlayListeners(imgPopup);
-};
+}
 
 // вывод карточек
 initialCards.forEach(function (item) {
-  const card = createCard(item, deleteCard, openCard);
+  const card = createCard(item, deleteCard, openCard, handleLikeClick);
   cardContainer.append(card);
 });
 
@@ -82,23 +82,23 @@ initialCards.forEach(function (item) {
 profileEditBtn.addEventListener("click", () => {
   initProfileFormValues();
   openPopup(profilePopup);
-  setCloseModalOnOverlayListeners(profilePopup);
 });
 
 profileAddBtn.addEventListener("click", () => {
-  initProfileFormValues();
   openPopup(newCardPopup);
-  setCloseModalOnOverlayListeners(newCardPopup);
 });
 
 // кнопка закрытия
 
 closeBtns.forEach(function (btn) {
+  const popup = btn.closest(".popup");
   btn.addEventListener("click", function () {
-    const popup = btn.closest(".popup");
     closePopup(popup);
   });
 });
+
+// закрытие по нажатаию на оверлей
+popups.forEach((popup) => setCloseModalOnOverlayListeners(popup));
 
 // обработчики
 
