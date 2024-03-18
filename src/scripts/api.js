@@ -1,3 +1,15 @@
+export {
+  getProfileInfoApi,
+  setProfileInfoApi,
+  getCardListApi,
+  cardCreateApi,
+  deleteCardApi,
+  likeCardApi,
+  setProfileAvatar,
+  removeLikeCardApi,
+  config,
+};
+
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wff-cohort-8",
   headers: {
@@ -13,6 +25,17 @@ function getResponseData(res) {
   return res.json();
 }
 
+function setProfileInfoApi(name, about) {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name,
+      about,
+    }),
+  }).then(getResponseData);
+}
+
 function getProfileInfoApi() {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
@@ -22,17 +45,6 @@ function getProfileInfoApi() {
 function getCardListApi() {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then(getResponseData);
-}
-
-function setProfileInfoApi(name, about) {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      name,
-      about,
-    }),
   }).then(getResponseData);
 }
 
@@ -92,16 +104,5 @@ function setProfileAvatar(url) {
   }).then(getResponseData);
 }
 
-export {
-  getProfileInfoApi,
-  setProfileInfoApi,
-  getCardListApi,
-  cardCreateApi,
-  deleteCardApi,
-  likeCardApi,
-  setProfileAvatar,
-  removeLikeCardApi,
-  config,
-};
 
 

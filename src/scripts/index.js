@@ -97,7 +97,13 @@ function handleNewCardFormSubmit(evt) {
   cardCreateApi(newCardName.value, newCardLink.value)
     .then((res) => {
       res.userId = userId;
-      const card = createCard(res, deleteCard, openCard, handleLikeClick, handleOpenDeletePopup);
+      const card = createCard(
+        res,
+        deleteCard,
+        openCard,
+        handleLikeClick,
+        handleOpenDeletePopup
+      );
       cardContainer.prepend(card);
       closePopup(newCardPopup);
     })
@@ -142,20 +148,20 @@ function handleOpenDeletePopup(deleteCardPopup, cardId, cardElement) {
   openPopup(deleteCardPopup);
 }
 
-function changeBtnText(evt) {
-  evt.target.querySelector(".button").innerText = "Сохранение...";
-}
-
 formDeleteCard.addEventListener("submit", (evt) =>
   deleteCardHandler(evt, currentCardId, currentCardElement)
 );
 
 function defaultBtnText(evt, text) {
-  evt.target.querySelector('.button').innerText = text;
+  evt.target.querySelector(".button").innerText = text;
+}
+
+function approveDelete(evt) {
+  evt.target.querySelector(".button").innerText = "Сохранение...";
 }
 
 function deleteCardHandler(evt, currentCardId, currentCardElement) {
-  changeBtnText(evt);
+  approveDelete(evt);
   deleteCardApi(currentCardId)
     .then(() => {
       deleteCard(currentCardElement);
@@ -201,13 +207,15 @@ Promise.all([getProfileInfoApi(), getCardListApi()])
         cardContainer.append(card);
       });
     } else {
-      console.log('Данные о карточках не были получены или пусты.');
+      console.log("Данные о карточках не были получены или пусты.");
     }
   })
   .catch((err) => {
-    console.log('Произошла ошибка при загрузке данных о карточках:', err);
+    console.log("Произошла ошибка при загрузке данных о карточках:", err);
   });
 
+
+  
 
 // функция открытия карточки
 function openCard(link, text) {

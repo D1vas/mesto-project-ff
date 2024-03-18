@@ -6,7 +6,7 @@ export function createCard(
   openCard,
   handleLikeClick,
   userId,
-  handleOpenDeletePopup,
+  handleOpenDeletePopup
 ) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -23,7 +23,7 @@ export function createCard(
   if (dataCard.likes) {
     likeCounter.textContent = dataCard.likes.length;
   } else {
-    likeCounter.textContent = 0; 
+    likeCounter.textContent = 0;
   }
 
   if (dataCard.likes && Array.isArray(dataCard.likes)) {
@@ -45,18 +45,19 @@ export function createCard(
   );
 
   // удаление карточки если она не моя
-  
+
   deleteButton.addEventListener("click", () => {
     handleOpenDeletePopup(deleteCardPopup, dataCard["_id"], cardElement);
   });
   if (dataCard.owner["_id"] !== userId) {
     deleteButton.classList.add("card__delete-button_hidden");
   } else {
-     deleteButton.classList.remove("card__delete-button_hidden");
+    deleteButton.classList.remove("card__delete-button_hidden");
   }
 
   return cardElement;
 }
+
 
 // удаление карточки
 export function deleteCard(item) {
@@ -81,7 +82,9 @@ function hasUserLike(id, userId) {
 }
 
 function sendLikeRequest(hasLike, config, cardId) {
-  return hasLike? removeLikeCardApi(config, cardId) : likeCardApi(config, cardId);
+  return hasLike
+    ? removeLikeCardApi(config, cardId)
+    : likeCardApi(config, cardId);
 }
 
 function updateLikeAmount(likesCounter, likeAmount) {
