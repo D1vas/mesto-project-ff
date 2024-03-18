@@ -1,0 +1,5 @@
+.card__like-container {
+  position: relative;
+  inline-size: 21px;
+  block-size: 18px;
+}
