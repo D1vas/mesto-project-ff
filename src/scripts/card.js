@@ -5,7 +5,6 @@ export function createCard(
   deleteCardPopup,
   openCard,
   handleLikeClick,
-  userId,
   handleOpenDeletePopup
 ) {
   const cardTemplate = document.querySelector("#card-template").content;
@@ -28,7 +27,7 @@ export function createCard(
 
   if (dataCard.likes && Array.isArray(dataCard.likes)) {
     dataCard.likes.forEach((userLike) => {
-      if (hasUserLike(userLike["_id"], userId)) {
+      if (hasUserLike(userLike["_id"], dataCard.userId)) {
         makeLiked(likeButton);
       }
     });
@@ -49,7 +48,7 @@ export function createCard(
   deleteButton.addEventListener("click", () => {
     handleOpenDeletePopup(deleteCardPopup, dataCard["_id"], cardElement);
   });
-  if (dataCard.owner["_id"] !== userId) {
+  if (dataCard.owner["_id"] !== dataCard.userId) {
     deleteButton.classList.add("card__delete-button_hidden");
   } else {
     deleteButton.classList.remove("card__delete-button_hidden");
@@ -65,9 +64,6 @@ export function deleteCard(item) {
 }
 
 // лайк карточки
-// export function handleLikeClick(likeElement) {
-//   likeElement.classList.toggle("card__like-button_is-active");
-// }
 
 function makeLiked(likeElement) {
   likeElement.classList.toggle("card__like-button_is-active");
