@@ -48,6 +48,7 @@ export function createCard(
   deleteButton.addEventListener("click", () => {
     handleOpenDeletePopup(deleteCardPopup, dataCard["_id"], cardElement);
   });
+
   if (dataCard.owner["_id"] !== dataCard.userId) {
     deleteButton.classList.add("card__delete-button_hidden");
   } else {
@@ -70,11 +71,7 @@ function makeLiked(likeElement) {
 }
 
 function hasUserLike(id, userId) {
-  if (id == userId) {
-    return true;
-  } else {
-    return false;
-  }
+  return id === userId;
 }
 
 function sendLikeRequest(hasLike, config, cardId) {
