@@ -5,7 +5,7 @@ export function createCard(
   deleteCardPopup,
   openCard,
   handleLikeClick,
-  handleOpenDeletePopup
+  handleSubmitConfirmPopup
 ) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -46,7 +46,7 @@ export function createCard(
   // удаление карточки если она не моя
 
   deleteButton.addEventListener("click", () => {
-    handleOpenDeletePopup(deleteCardPopup, dataCard["_id"], cardElement);
+    handleSubmitConfirmPopup(deleteCardPopup, dataCard["_id"], cardElement);
   });
 
   if (dataCard.owner["_id"] !== dataCard.userId) {

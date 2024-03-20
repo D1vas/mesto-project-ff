@@ -134,7 +134,7 @@ function handleNewCardFormSubmit(evt) {
         deleteCardPopup,
         openCard,
         handleLikeClick,
-        handleOpenDeletePopup
+        handleSubmitConfirmPopup
       );
       cardContainer.prepend(card);
       closePopup(newCardPopup);
@@ -180,10 +180,10 @@ profileImage.addEventListener("click", () => {
 let currentCardId;
 let currentCardElement;
 
-function handleOpenDeletePopup(deleteCardPopup, cardId, cardElement) {
+function handleSubmitConfirmPopup(deleteCardPopup, cardId, cardElement) {
   currentCardId = cardId;
   currentCardElement = cardElement;
-  openPopup(deleteCardPopup);
+  openPopup(deleteCardPopup, deleteCardHandler);
 }
 
 formDeleteCard.addEventListener("submit", (evt) =>
@@ -229,20 +229,13 @@ Promise.all([getProfileInfoApi(), getCardListApi()])
     if (cardsData && Array.isArray(cardsData)) {
       cardsData.forEach((cardData) => {
         cardData.userId = userId;
-        const card = createCard(
+        const card = createCard(  
           cardData,
           deleteCard,
           openCard,
           handleLikeClick,
-          handleOpenDeletePopup
+          handleSubmitConfirmPopup
         );
-        // Присоединяем кнопку удаления только к карточкам пользователя
-        // if (cardData.owner._id === userId) {
-        //   const deleteButton = card.querySelector(".card__delete-button");
-        //   deleteButton.addEventListener("click", () => {
-        //     handleOpenDeletePopup(deleteCardPopup, cardData._id, card);
-        //   });
-        // }
         cardContainer.append(card);
       });
     } else {
