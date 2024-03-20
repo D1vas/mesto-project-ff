@@ -9,8 +9,10 @@
     <img src="https://readme-typing-svg.demolab.com/?lines=Ссылка+на+репозиторий+:&font=Fira%20Code&width=380&height=50&duration=4000&pause=1000"  Typing SVG">
     <p>https://github.com/D1vas/mesto-project-ff.git</p>
 </p>
+<!-- markdownlint-enable MD033 -->
 ## ⚡Использованные языки:
 
 1. JavaScript
 2. HTML
 3. CSS
+
