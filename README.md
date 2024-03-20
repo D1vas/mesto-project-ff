@@ -5,5 +5,7 @@
     <img src="https://readme-typing-svg.demolab.com/?lines=Ссылка+на+сайт&font=Fira%20Code&center=false&width=380&height=50&duration=4000&pause=1000"  Typing SVG">
     <p>https://d1vas.github.io/mesto-project-ff</p>
 </p>
-
-Ссылка на репозиторий: https://github.com/D1vas/mesto-project-ff.git
+<p align="center">
+    <img src="https://readme-typing-svg.demolab.com/?lines=Ссылка+на+репозиторий&font=Fira%20Code&center=false&width=380&height=50&duration=4000&pause=1000"  Typing SVG">
+    <p>https://github.com/D1vas/mesto-project-ff.git</p>
+</p>
