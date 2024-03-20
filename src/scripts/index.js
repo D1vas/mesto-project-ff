@@ -237,12 +237,12 @@ Promise.all([getProfileInfoApi(), getCardListApi()])
           handleOpenDeletePopup
         );
         // Присоединяем кнопку удаления только к карточкам пользователя
-        if (cardData.owner._id === userId) {
-          const deleteButton = card.querySelector(".card__delete-button");
-          deleteButton.addEventListener("click", () => {
-            handleOpenDeletePopup(deleteCardPopup, cardData._id, card);
-          });
-        }
+        // if (cardData.owner._id === userId) {
+        //   const deleteButton = card.querySelector(".card__delete-button");
+        //   deleteButton.addEventListener("click", () => {
+        //     handleOpenDeletePopup(deleteCardPopup, cardData._id, card);
+        //   });
+        // }
         cardContainer.append(card);
       });
     } else {
