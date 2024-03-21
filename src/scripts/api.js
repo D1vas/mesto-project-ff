@@ -1,15 +1,3 @@
-export {
-  getProfileInfoApi,
-  setProfileInfoApi,
-  getCardListApi,
-  cardCreateApi,
-  deleteCardApi,
-  likeCardApi,
-  setProfileAvatar,
-  removeLikeCardApi,
-  config,
-};
-
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wff-cohort-8",
   headers: {
@@ -25,79 +13,83 @@ function getResponseData(res) {
   return res.json();
 }
 
+function request(url, options) {
+  return fetch(url, options).then(getResponseData);
+}
+
 function setProfileInfoApi(name, about) {
-  return fetch(`${config.baseUrl}/users/me`, {
+  return request(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       name,
       about,
     }),
-  }).then(getResponseData);
+  });
 }
 
 function getProfileInfoApi() {
-  return fetch(`${config.baseUrl}/users/me`, {
+  return request(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  }).then(getResponseData);
+  });
 }
 
 function getCardListApi() {
-  return fetch(`${config.baseUrl}/cards`, {
+  return request(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then(getResponseData);
+  });
 }
 
 function cardCreateApi(name, link) {
-  return fetch(`${config.baseUrl}/cards`, {
+  return request(`${config.baseUrl}/cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
       name,
       link,
     }),
-  }).then(getResponseData);
+  });
 }
 
 function deleteCardApi(cardId) {
-  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+  return request(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  }).then(getResponseData);
+  });
 }
 
 function likeCardApi(config, cardId) {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    headers: config.headers,
+  return request(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
+    headers: config.headers,
   });
 }
 
 function removeLikeCardApi(config, cardId) {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    headers: config.headers,
+  return request(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
+    headers: config.headers,
   });
 }
 
 function setProfileAvatar(url) {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
+  return request(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       avatar: url,
     }),
-  }).then(getResponseData);
+  });
 }
+
+export {
+  getProfileInfoApi,
+  setProfileInfoApi,
+  getCardListApi,
+  cardCreateApi,
+  deleteCardApi,
+  likeCardApi,
+  setProfileAvatar,
+  removeLikeCardApi,
+  config,
+};

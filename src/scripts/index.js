@@ -66,24 +66,19 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   savingButton(evt);
 
+  const name = profileNameInput.value;
+  const description = profileDescriptionInput.value;
+
   setProfileInfoApi(nameInput.value, descriptionInput.value)
-    .then((res) => {
-      profileName.textContent = res.name;
-      profileDescription.textContent = res.about;
+    .then(() => {
+      profileName.textContent = name;
+      profileDescription.textContent = description;
       closePopup(profilePopup);
     })
     .catch((err) => console.log(`Не удалось изменить профиль. ${err}`))
     .finally(() => {
       setTimeout(() => defaultBtnText(evt, "Сохранить"), 600, evt);
     });
-
-  const name = profileNameInput.value;
-  const description = profileDescriptionInput.value;
-
-  profileName.textContent = name;
-  profileDescription.textContent = description;
-
-  closePopup(profilePopup);
 }
 
 // изменение аватара профиля
@@ -132,8 +127,6 @@ function handleNewCardFormSubmit(evt) {
     .finally(() => {
       setTimeout(() => defaultBtnText(evt, "Сохранить"), 600, evt);
     });
-
-  formCard.reset();
 }
 
 // удаление карточки
