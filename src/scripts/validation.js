@@ -22,7 +22,6 @@ const hideInputError = (formElement, inputElement, validationConfig) => {
 };
 
 // функция проверки валидности ввода
-
 const checkInputValidity = (formElement, inputElement, validationConfig) => {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
@@ -79,7 +78,6 @@ function toggleButtonState(inputList, buttonElement, validationConfig) {
 }
 
 // функция очистки ошибок валидации формы и делающая кнопку неактивной
-
 const clearValidation = (formElement, validationConfig) => {
   const inputList = Array.from(
     formElement.querySelectorAll(validationConfig.inputSelector)
@@ -90,8 +88,9 @@ const clearValidation = (formElement, validationConfig) => {
 
   inputList.forEach((inputElement) => {
     inputElement.value = "";
-    hideInputError(formElement, inputElement, validationConfig.inactiveButtonClass);
+    hideInputError(formElement, inputElement, validationConfig);
   });
-    disableSubmitButton(submitButton, validationConfig.inactiveButtonClass);
+  disableSubmitButton(submitButton, validationConfig.inactiveButtonClass);
 };
+
 

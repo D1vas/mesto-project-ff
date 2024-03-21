@@ -69,23 +69,21 @@ function deleteCardApi(cardId) {
 function likeCardApi(config, cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     headers: config.headers,
-    method: 'PUT'
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
+    method: "PUT",
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  });
 }
 
 function removeLikeCardApi(config, cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     headers: config.headers,
-    method: 'DELETE'
-  })
-  .then((res) => {
+    method: "DELETE",
+  }).then((res) => {
     if (res.ok) {
       return res.json();
     } else {
@@ -103,6 +101,3 @@ function setProfileAvatar(url) {
     }),
   }).then(getResponseData);
 }
-
-
-

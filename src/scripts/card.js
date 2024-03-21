@@ -13,7 +13,6 @@ export function createCard(
   const cardImg = cardElement.querySelector(".card__image");
   const likeButton = cardElement.querySelector(".card__like-button");
   const likeCounter = cardElement.querySelector(".card__like-counter");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
 
   cardTitle.textContent = dataCard.name;
   cardImg.src = dataCard.link;
@@ -44,7 +43,7 @@ export function createCard(
   );
 
   // удаление карточки если она не моя
-
+  const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
     handleSubmitConfirmPopup(deleteCardPopup, dataCard["_id"], cardElement);
   });
@@ -58,14 +57,12 @@ export function createCard(
   return cardElement;
 }
 
-
 // удаление карточки
 export function deleteCard(item) {
   item.remove();
 }
 
 // лайк карточки
-
 function makeLiked(likeElement) {
   likeElement.classList.toggle("card__like-button_is-active");
 }
